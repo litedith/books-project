@@ -28,7 +28,8 @@ public class BookAPI {
 	private URL url;
  
 	private BookRootAPI rootAPI = null;
-	
+	public BookAPI()
+	{}
 	private BookAPI(Context context) throws IOException,
 			BookAndroidException {
 		super();
@@ -93,15 +94,21 @@ public class BookAPI {
  
 	}
  
-	public BookCollection getBooks(String author) throws BookAndroidException {
-		Log.d(TAG, "getBooks()");
+	public BookCollection getBooks(URL url) throws BookAndroidException {
+		//Log.d(TAG, "getBooksFromAuthor(author)");
 		System.out.println("Hemos llegado a api");
 		BookCollection books = new BookCollection();
+		
  
 		HttpURLConnection urlConnection = null;
 		try {
-			urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-					.get("books").getTarget()).openConnection();
+//			urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
+//					.get("get author-books").getTarget()).openConnection();
+			urlConnection = (HttpURLConnection) url.openConnection();
+
+			urlConnection.setRequestProperty("Accept",
+					MediaType.BOOK_API_BOOK_COLLECTION);
+			
 			urlConnection.setRequestMethod("GET");
 			urlConnection.setDoInput(true);
 			urlConnection.connect();
@@ -122,8 +129,8 @@ public class BookAPI {
  
 			JSONObject jsonObject = new JSONObject(sb.toString());
 			System.out.println(jsonObject);
-			JSONArray jsonLinks = jsonObject.getJSONArray("links");//atributoss
-			parseLinks(jsonLinks, books.getLinks());
+			//JSONArray jsonLinks = jsonObject.getJSONArray("links");//atributoss
+			//parseLinks(jsonLinks, books.getLinks());
  
 			
 			JSONArray jsonBooks = jsonObject.getJSONArray("books");
@@ -133,8 +140,8 @@ public class BookAPI {
 				book.setAuthor(jsonBook.getString("author"));
 				book.setLanguage(jsonBook.getString("language"));
 				book.setIdbook(jsonBook.getString("idbook"));
-				jsonLinks = jsonBook.getJSONArray("links");
-				parseLinks(jsonLinks, books.getLinks());
+				//jsonLinks = jsonBook.getJSONArray("links");
+				//parseLinks(jsonLinks, books.getLinks());
 				books.getBooks().add(book);
 			}
 		} catch (IOException e) {

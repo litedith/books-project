@@ -1,7 +1,9 @@
 package edu.upc.eetac.dsa.egalmes.books.android;
 
 import java.net.Authenticator;
+import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.ArrayList;
 
 import edu.upc.eetac.dsa.egalmes.books.android.api.Book;
@@ -22,16 +24,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class listado extends ListActivity {
-	private class FetchStingsTask extends AsyncTask<String , Void, BookCollection> {
+	
+	String serverAddress;
+	String serverPort;
+	BookAPI api;
+	private class FetchStingsTask extends AsyncTask<URL , Void, BookCollection> {
 		private ProgressDialog pd;
 
 		@Override
-		protected BookCollection doInBackground(String... params) {
+		protected BookCollection doInBackground(URL... params) {
 			BookCollection books = null;
 			
 			try {
-				books = BookAPI.getInstance(listado.this).getBooks(params[0]);
-				System.out.println("hemos entrado en asynk");
+				System.out.println("hemos entrado en asynk-------------------1111");
+				//books = BookAPI.getInstance(listado.this).getBooks(params[0]);
+				books = api.getBooks(params[0]);
 						
 			} catch (BookAndroidException e) {
 				e.printStackTrace();
@@ -78,12 +85,20 @@ public class listado extends ListActivity {
 		Bundle bundle = this.getIntent().getExtras();
 		String a= bundle.get("palabra").toString();
 
-
+		BookAPI api = new BookAPI();
+		URL url = null;
+		try {
+			url = new URL("http://" + serverAddress + ":" + serverPort
+					+ "/books-api/books/searching?author=" +a);
+		} catch (MalformedURLException e) {
+			Log.d(TAG, e.getMessage(), e);
+			finish();
+		}
 		stingList = new ArrayList<>();
-		//adapter = new BookAdapter(this, stingList);
+		adapter = new BookAdapter(this, stingList);
 		//System.out.println("HOOOOOOOOLITAAAAAS-------------");
 		setListAdapter(adapter);
-		(new FetchStingsTask()).execute(a);
+		(new FetchStingsTask()).execute(url);
 		//System.out.println("HOOOOOOOOLITAAAAAS222222222-------------");
 		}
 		

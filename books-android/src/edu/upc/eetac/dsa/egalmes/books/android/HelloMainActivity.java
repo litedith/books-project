@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 import edu.upc.eetac.dsa.egalmes.books.android.api.Book.*;
 import edu.upc.eetac.dsa.egalmes.books.android.api.Book;
+import edu.upc.eetac.dsa.egalmes.books.android.*;
+
 import edu.upc.eetac.dsa.egalmes.books.android.api.BookAPI;
 import edu.upc.eetac.dsa.egalmes.books.android.api.BookAndroidException;
 import edu.upc.eetac.dsa.egalmes.books.android.api.BookCollection;
@@ -49,11 +51,12 @@ public class HelloMainActivity extends Activity
 	BookAPI api;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		System.out.println("HELOOOOOOO");
+		
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.main);
 	SharedPreferences prefs = getSharedPreferences("books-api",
 			Context.MODE_PRIVATE);
+	
 	final String username = prefs.getString("username", "victor");
 	final String password = prefs.getString("password", "victor");
 
@@ -70,18 +73,18 @@ public class HelloMainActivity extends Activity
 	}
 	
 	public void llamar(View v) {
-		
-//		api = new BookAPI();
+		String palabra = ((EditText) findViewById(R.id.edittext1)).getText()
+				.toString();
+//		BookAPI api = new BookAPI();
 //		URL url = null;
 //		try {
 //			url = new URL("http://" + serverAddress + ":" + serverPort
-//					+ "/books-api/books/");
+//					+ "/books-api/books/searching?author=" + palabra);
 //		} catch (MalformedURLException e) {
 //			Log.d(TAG, e.getMessage(), e);
 //			finish();
 //		}
-		String palabra = ((EditText) findViewById(R.id.edittext1)).getText()
-			.toString();
+		
 		Intent i = new Intent(getApplicationContext(), listado.class);
 		i.putExtra("palabra", palabra);
 		startActivity(i);

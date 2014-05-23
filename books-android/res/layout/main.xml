@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+ 
+    <TextView
+        android:id="@+id/tvSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="busca por autor o titulo" />
+ 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip" >
+
+        <EditText
+            android:id="@+id/edittext1"
+            android:layout_width="159dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginTop="5dip"
+            android:layout_weight="0.82"
+            android:ems="10"
+            android:singleLine="true" >
+        </EditText>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="254dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:onClick="llamar"
+        android:text="busca" />
+ 
+</LinearLayout>
+   

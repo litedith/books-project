@@ -1,0 +1,12 @@
+.classpath
+.project
+.settings/
+target/
+
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+local.properties
